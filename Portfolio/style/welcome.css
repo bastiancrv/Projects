@@ -1,0 +1,78 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background: url("../image/leaves2.webp") no-repeat center fixed;
+    background-size: cover;
+    font-family: Roboto;
+}
+
+.container{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: 
+     "title"
+     "intro"
+     "enter";
+    height: 600px;
+    width: 600px;
+    border-radius: 20px;
+    box-shadow: 0 0px  white, 0 1px 10px white; 
+    color: white;
+    margin: 100px auto;
+    padding: 10px;
+    backdrop-filter: blur(4px);
+}
+
+.title{
+    grid-area: title;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right,green, green, grey, white, white);
+    background-clip: text;
+    color: transparent;
+    font-size: 40px;
+}
+
+.intro{
+    grid-area: intro;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 80%;
+}
+
+.enter{
+    grid-area: enter;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.enter button{
+    border: none;
+    background-color: unset;
+    font-size: 20px;
+    box-shadow: 0 0px  white, 0 1px 10px white; 
+    border-radius: 40px;
+    padding: 10px;
+    backdrop-filter: blur(5px);
+    transition: .2s linear;
+    width: 100px;
+}
+
+.enter button:hover{
+    transform: scale(120%);
+    color: white;
+    cursor: pointer;
+}
+
+.enter a{
+    text-decoration: none;
+    color: white;
+}
