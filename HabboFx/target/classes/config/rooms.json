@@ -1,0 +1,25 @@
+[
+  {
+    "id": "room1",
+    "name": "Salle de classe",
+    "width": 10,
+    "height": 8,
+    "color": "#FFFFFF"
+  },
+
+  {
+    "id": "room2",
+    "name": "Salle de détente",
+    "width": 10,
+    "height": 15,
+    "color": "#FFFFFF"
+  },
+
+  {
+    "id": "room3",
+    "name": "Réfectoire",
+    "width": 20,
+    "height": 20,
+    "color": "#FFFFFF"
+  }
+]
