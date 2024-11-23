@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.habbo.app"},{"l":"com.habbo.core"},{"l":"com.habbo.entities"},{"l":"com.habbo.map"},{"l":"com.habbo.store"},{"l":"com.habbo.ui"},{"l":"com.habbo.utils"}];updateSearchResults();
