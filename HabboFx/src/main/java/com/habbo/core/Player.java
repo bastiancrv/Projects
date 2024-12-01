@@ -6,13 +6,12 @@ import javafx.scene.image.Image;
 
 public class Player {
     private final Inventory inventory;
-    private Coordinates position; // Position actuelle sur la grille
-    private Image sprite; // Sprite du joueur
+    private Coordinates position;
+    private Image sprite;
 
     public Player() {
         this.inventory = new Inventory();
-        this.position = new Coordinates(0, 0); // Position par défaut (coin supérieur gauche)
-        this.sprite = new Image(getClass().getResourceAsStream("/images/character/character_east_south.png")); // Sprite par défaut
+        this.position = new Coordinates(0, 0);
     }
 
     public Inventory getInventory() {
@@ -40,7 +39,6 @@ public class Player {
     }
 
     public void move(int deltaX, int deltaY) {
-        // Mise à jour de la position en fonction des déplacements
         this.position = new Coordinates(position.getX() + deltaX, position.getY() + deltaY);
     }
 }

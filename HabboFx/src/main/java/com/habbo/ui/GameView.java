@@ -83,9 +83,9 @@ public class GameView {
     private boolean isCooldownActive = false;  // Indique si le cooldown est actif
 private static final long COOLDOWN_TIME_MS = 30; // Temps de cooldown en millisecondes (1 seconde)
 
-    
 
-    
+
+
     public GameView() {
         this.roomRenderer = new RoomRenderer();
         this.popupManager = new PopupManager();
@@ -144,50 +144,50 @@ private static final long COOLDOWN_TIME_MS = 30; // Temps de cooldown en millise
         button.setOnMouseEntered(e -> {button.setEffect(new DropShadow(15, Color.GRAY)); button.setCursor(Cursor.HAND);});
         button.setOnMouseExited(e -> {button.setEffect(new DropShadow(10, Color.BLACK)); button.setCursor(Cursor.DEFAULT);});
 
-        
-        
+
+
 
         return button;
     }
 
     public HBox createBottomLeftPanel(Pane root) {
         bottomLeftPanel = createPanel();
-    
+
         // Boutons existants
         Button inventoryButton = createButton("/images/inventory.png", "Inventory", e -> showInventoryPopup());
         Button storeButton = createButton("/images/shop.png", "Store", e -> showStore());
         Button navigationButton = createButton("/images/nav.png", "Navigation", e -> showRoomSelector(mapManager, roomGroup, root));
-    
+
         Button resetButton = createButton("/images/reset.png", "Reset Room", e -> {
             // Désactiver le zoom et réinitialiser la position de la pièce
             disableZoom(roomGroup);
-        
+
             // Réinitialiser la position de la pièce au centre avec les coordonnées d'origine
             roomGroup.setLayoutX(0);
             roomGroup.setLayoutY(0);
-        
+
             // Placer la pièce dans la position d'origine sans réinitialiser les items placés
             // Par exemple, réinitialiser la position en utilisant les coordonnées initiales
             double currentRoomStartX = 0.0; // Coordonnée initiale X
             double currentRoomStartY = 0.0; // Coordonnée initiale Y
             roomGroup.setLayoutX(currentRoomStartX);
             roomGroup.setLayoutY(currentRoomStartY);
-        
+
             // Ne pas toucher aux items placés dans roomGroup
             // Si vous avez un mécanisme qui gère les objets placés, vous pouvez le laisser intact ici
         });
         Button cashButton = createButton("/images/cash.png", "Cash", e -> showGameWindow(mapManager, roomGroup, root));
 
-        
-        
-    
+
+
+
         // Ajouter les boutons au panneau
         bottomLeftPanel.getChildren().addAll(inventoryButton, storeButton, navigationButton, resetButton, cashButton);
-    
+
         // Positionner le panneau en bas à gauche
         bottomLeftPanel.layoutXProperty().bind(root.widthProperty().multiply(0.01));
         bottomLeftPanel.layoutYProperty().bind(root.heightProperty().subtract(bottomLeftPanel.heightProperty()).subtract(20));
-    
+
         return bottomLeftPanel;
     }
 
@@ -201,15 +201,15 @@ private static final long COOLDOWN_TIME_MS = 30; // Temps de cooldown en millise
                 break; // Terminer dès qu'on a trouvé et réinitialisé la transformation Scale
             }
         }
-        
+
         // Optionnel : remettre la position de la pièce à son état initial
         roomGroup.setLayoutX(0);
         roomGroup.setLayoutY(0);
     }
-    
-    
-    
-    
+
+
+
+
 
     public HBox createBottomRightPanel(Pane root) {
         bottomRightPanel = createPanel();
@@ -225,24 +225,24 @@ private static final long COOLDOWN_TIME_MS = 30; // Temps de cooldown en millise
 
     public void initializeRoom(Group root, double startX, double startY, RoomConfiguration roomConfig) {
         roomRenderer.renderRoom(root, startX, startY, roomConfig, tileInfoLabel);
-    
+
         double tileX = startX + (playerPosition.getX() - playerPosition.getY()) * RoomConfiguration.TILE_SIZE;
         double tileY = startY + (playerPosition.getX() + playerPosition.getY()) * RoomConfiguration.TILE_SIZE / 2;
-    
+
         roomRenderer.moveCharacter(tileX, tileY);
     }
-    
+
 
     public void movePlayer(int deltaX, int deltaY, double startX, double startY, RoomConfiguration roomConfig) {
         playerPosition.setX(playerPosition.getX() + deltaX);
         playerPosition.setY(playerPosition.getY() + deltaY);
-    
+
         double tileX = startX + (playerPosition.getX() - playerPosition.getY()) * RoomConfiguration.TILE_SIZE;
         double tileY = startY + (playerPosition.getX() + playerPosition.getY()) * RoomConfiguration.TILE_SIZE / 2;
-    
+
         roomRenderer.moveCharacter(tileX, tileY);
     }
-    
+
 
     public Label getMessageLabel() {
         return messageLabel;
@@ -317,7 +317,7 @@ public void showInventoryPopup() {
         if (selectedItem != null) {
             // Fermer l'inventaire
             overlayPane.setVisible(false);
-            
+
             // Commencer à écouter les clics dans la pièce pour placer l'item
             setupTileClickForItemPlacement();
         }
@@ -454,8 +454,8 @@ private void removeItemFromInventory(JsonObject item) {
 
 
 
-    
-    
+
+
 
     public void showPopup(String title, String message) {
         StackPane popupContent = popupManager.createPopupContent(title, message);
@@ -469,27 +469,27 @@ private void removeItemFromInventory(JsonObject item) {
         overlayPane.getChildren().add(popupContent);
         overlayPane.setVisible(true);
     }
-    
+
 
     public void showStore() {
         overlayPane.setVisible(true);
-    
+
         HBox storeLayout = new HBox(10);
         storeLayout.setPadding(new Insets(15));
         storeLayout.setStyle("-fx-background-color: rgba(255, 255, 255, 0.9); -fx-border-color: black; -fx-border-width: 2px;");
-    
+
         // Colonne gauche : Liste des catégories
         VBox categoryColumn = new VBox(10);
         categoryColumn.setPadding(new Insets(10));
         categoryColumn.setStyle("-fx-background-color: #f5f5f5; -fx-border-color: #ddd; -fx-border-width: 1px;");
         categoryColumn.setPrefWidth(200);
-    
+
         Label categoryLabel = new Label("Catégories");
         categoryLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
-    
+
         ListView<String> categoryList = new ListView<>();
         categoryList.setPrefHeight(400);
-    
+
         try {
             CategoryService categoryService = new CategoryService();
             List<String> categories = categoryService.getCategories();
@@ -498,27 +498,27 @@ private void removeItemFromInventory(JsonObject item) {
             e.printStackTrace();
             categoryList.getItems().add("Erreur de chargement");
         }
-    
+
         categoryColumn.getChildren().addAll(categoryLabel, categoryList);
-    
+
         // Colonne droite : Section des items
         VBox itemColumn = new VBox(10);
         itemColumn.setPadding(new Insets(10));
         itemColumn.setStyle("-fx-background-color: #fff; -fx-border-color: #ddd; -fx-border-width: 1px;");
         itemColumn.setPrefWidth(400);
-    
+
         // Aperçu en haut
         HBox previewBox = new HBox(10);
         previewBox.setPadding(new Insets(10));
         previewBox.setStyle("-fx-background-color: #f9f9f9; -fx-border-color: gray; -fx-border-width: 1px;");
         previewBox.setVisible(false); // Masqué par défaut
-    
+
         // Image de l'aperçu
         ImageView previewImage = new ImageView();
         previewImage.setFitWidth(64);
         previewImage.setFitHeight(64);
         previewImage.setPreserveRatio(true);
-    
+
         // Détails de l'aperçu
         VBox previewDetails = new VBox(5);
         Label previewName = new Label("Nom de l'item");
@@ -526,7 +526,7 @@ private void removeItemFromInventory(JsonObject item) {
         Label previewDescription = new Label("Description de l'item");
         previewDescription.setStyle("-fx-font-size: 12px; -fx-text-fill: gray;");
         previewDescription.setWrapText(true);
-    
+
 
         // Label pour afficher le message de confirmation
         Label confirmationLabel = new Label();
@@ -545,8 +545,8 @@ private void removeItemFromInventory(JsonObject item) {
             if (selectedItem != null) {
                 playerInventory.add(selectedItem);
 
-        confirmationLabel.setText("L'item \"" 
-            + selectedItem.getAsJsonObject("hotelData").get("name").getAsString() 
+        confirmationLabel.setText("L'item \""
+            + selectedItem.getAsJsonObject("hotelData").get("name").getAsString()
             + "\" a été ajouté à l'inventaire !");
         confirmationLabel.setVisible(true);
 
@@ -567,49 +567,49 @@ private void removeItemFromInventory(JsonObject item) {
         addToInventoryButton.setOnMouseReleased(e -> addToInventoryButton.setStyle("-fx-font-size: 14px; -fx-background-color: #5cb85c; -fx-text-fill: white;"));
         addToInventoryButton.setOnMouseEntered(e -> {addToInventoryButton.setEffect(new DropShadow(15, Color.GRAY)); addToInventoryButton.setCursor(Cursor.HAND);});
         addToInventoryButton.setOnMouseExited(e -> {addToInventoryButton.setEffect(new DropShadow(10, Color.BLACK)); addToInventoryButton.setCursor(Cursor.DEFAULT);});
-    
+
         previewDetails.getChildren().addAll(previewName, previewDescription, addToInventoryButton);
         previewBox.getChildren().addAll(previewImage, previewDetails);
-    
+
         // Grille des items
         ScrollPane itemScrollPane = new ScrollPane();
         itemScrollPane.setPrefHeight(400);
         itemScrollPane.setFitToWidth(true);
-    
+
         GridPane itemGrid = new GridPane();
         itemGrid.setHgap(5);
         itemGrid.setVgap(5);
         itemScrollPane.setContent(itemGrid);
-    
+
         itemColumn.getChildren().addAll(previewBox, itemScrollPane);
-    
+
         // Ajout d'un écouteur sur les catégories
         categoryList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 try {
                     System.out.println("Catégorie sélectionnée : " + newValue);
-    
+
                     FurnitureService furnitureService = new FurnitureService();
                     List<JsonObject> items = furnitureService.getFurnitureByCategory(newValue);
-    
+
                     System.out.println("Nombre d'items retournés : " + items.size());
-    
+
                     itemGrid.getChildren().clear();
                     for (int i = 0; i < items.size(); i++) {
                         JsonObject item = items.get(i);
                         VBox itemView = createGridItemView(item);
-    
+
                         // Ajouter un écouteur pour afficher l'aperçu
                         itemView.setOnMouseClicked(e -> {
                             previewBox.setVisible(true);
                             previewName.setText(item.getAsJsonObject("hotelData").get("name").getAsString());
                             previewDescription.setText(item.getAsJsonObject("hotelData").get("description").getAsString());
                             previewImage.setImage(new Image(item.getAsJsonObject("hotelData").getAsJsonObject("icon").get("url").getAsString()));
-    
+
                             // Lier l'item actuel au bouton
                             addToInventoryButton.setUserData(item);
                         });
-    
+
                         itemGrid.add(itemView, i % 8, i / 8); // 8 colonnes par ligne
                     }
                 } catch (Exception e) {
@@ -620,7 +620,7 @@ private void removeItemFromInventory(JsonObject item) {
                 }
             }
         });
-    
+
         Button closeButton = new Button("Fermer");
         closeButton.setStyle("-fx-font-size: 14px; -fx-background-color: #d9534f; -fx-text-fill: white;");
         closeButton.setOnAction(e -> overlayPane.setVisible(false));
@@ -630,33 +630,33 @@ private void removeItemFromInventory(JsonObject item) {
         closeButton.setOnMouseReleased(e -> closeButton.setStyle("-fx-font-size: 14px; -fx-background-color: #d9534f; -fx-text-fill: white;"));
         closeButton.setOnMouseEntered(e -> {closeButton.setEffect(new DropShadow(15, Color.GRAY)); closeButton.setCursor(Cursor.HAND);});
         closeButton.setOnMouseExited(e -> {closeButton.setEffect(new DropShadow(10, Color.BLACK)); closeButton.setCursor(Cursor.DEFAULT);});
-    
+
         VBox mainLayout = new VBox(10, storeLayout, closeButton);
         storeLayout.getChildren().addAll(categoryColumn, itemColumn);
 
         itemColumn.getChildren().add(closeButton);
-    
+
         overlayPane.getChildren().clear();
         overlayPane.getChildren().add(mainLayout);
     }
-    
-    
+
+
     private VBox createGridItemView(JsonObject item) {
         VBox itemBox = new VBox(5);
         itemBox.setStyle("-fx-background-color: white; -fx-border-color: gray; -fx-padding: 5; -fx-border-radius: 5;");
         itemBox.setPrefSize(40, 40);
-    
+
         String imageUrl = (item.has("hotelData") && item.getAsJsonObject("hotelData").getAsJsonObject("icon").has("url"))
                 ? item.getAsJsonObject("hotelData").getAsJsonObject("icon").get("url").getAsString()
                 : null;
-    
+
         ImageView imageView = new ImageView();
         if (imageUrl != null) {
             imageView.setImage(new Image(imageUrl));
         } else {
             imageView.setImage(new Image("/images/placeholder.png")); // Image par défaut
         }
-    
+
         itemBox.getChildren().add(imageView);
         return itemBox;
     }
@@ -684,27 +684,27 @@ private void removeItemFromInventory(JsonObject item) {
             System.err.println("MapManager is null in showRoomSelector!");
             return; // éviter d'exécuter la méthode si mapManager est null
         }
-    
+
         if (roomGroup == null) {
             System.err.println("Le roomGroup est nul dans showRoomSelector !");
             return; // Ne continuez pas si roomGroup est nul
         }
-    
+
         overlayPane.setVisible(true);  // Afficher l'overlay
-    
+
         VBox selectorLayout = new VBox(10);
         selectorLayout.setPadding(new Insets(15));
         selectorLayout.setStyle("-fx-background-color: rgba(255, 255, 255, 0.9); -fx-border-color: black; -fx-border-width: 2px;");
         selectorLayout.setAlignment(Pos.CENTER);
-    
+
         Label selectorLabel = new Label("Choisissez une pièce");
         selectorLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
-    
+
         ListView<String> roomList = new ListView<>();
         for (RoomConfiguration roomConfig : mapManager.getRoomConfigurations()) {
             roomList.getItems().add(roomConfig.getName());
         }
-    
+
         Button selectButton = new Button("Sélectionner");
         selectButton.setStyle("-fx-font-size: 14px; -fx-background-color: #5cb85c; -fx-text-fill: white;");
         selectButton.setOnAction(e -> {
@@ -712,50 +712,50 @@ private void removeItemFromInventory(JsonObject item) {
             if (selectedIndex >= 0) {
                 // Mettre à jour la salle actuelle dans MapManager
                 mapManager.setCurrentRoomIndex(selectedIndex);
-    
+
                 // Récupérer la salle sélectionnée
                 RoomConfiguration selectedRoom = mapManager.getCurrentRoom();
-    
+
                 // Désactiver le zoom avant de changer de pièce
                 disableZoom(roomGroup);
-    
+
                 // Effacer la salle précédente
                 roomGroup.getChildren().clear();
-    
+
                 // Réinitialiser la position de la pièce avant de l'initialiser
                 roomGroup.setLayoutX(0);
                 roomGroup.setLayoutY(0);
-    
+
                 // Réinitialiser la salle avec les nouvelles configurations
                 initializeRoom(roomGroup, 470.0, 250.0, selectedRoom);
-    
+
                 // Masquer l'overlay une fois la salle changée
                 overlayPane.setVisible(false);
             }
         });
-    
+
         selectButton.setEffect(new DropShadow(10, Color.BLACK));
         selectButton.setOnMousePressed(e -> selectButton.setStyle("-fx-background-color: #cccccc;"));
         selectButton.setOnMouseReleased(e -> selectButton.setStyle("-fx-font-size: 14px; -fx-background-color: #5cb85c; -fx-text-fill: white;"));
         selectButton.setOnMouseEntered(e -> {selectButton.setEffect(new DropShadow(15, Color.GRAY)); selectButton.setCursor(Cursor.HAND);});
         selectButton.setOnMouseExited(e -> {selectButton.setEffect(new DropShadow(10, Color.BLACK)); selectButton.setCursor(Cursor.DEFAULT);});
-    
+
         Button closeButton = new Button("Fermer");
         closeButton.setStyle("-fx-font-size: 14px; -fx-background-color: #d9534f; -fx-text-fill: white;");
         closeButton.setOnAction(e -> overlayPane.setVisible(false));
-    
+
         closeButton.setEffect(new DropShadow(10, Color.BLACK));
         closeButton.setOnMousePressed(e -> closeButton.setStyle("-fx-background-color: #cccccc;"));
         closeButton.setOnMouseReleased(e -> closeButton.setStyle("-fx-font-size: 14px; -fx-background-color: #d9534f; -fx-text-fill: white;"));
         closeButton.setOnMouseEntered(e -> {closeButton.setEffect(new DropShadow(15, Color.GRAY)); closeButton.setCursor(Cursor.HAND);});
         closeButton.setOnMouseExited(e -> {closeButton.setEffect(new DropShadow(10, Color.BLACK)); closeButton.setCursor(Cursor.DEFAULT);});
-    
+
         selectorLayout.getChildren().addAll(selectorLabel, roomList, selectButton, closeButton);
-    
+
         overlayPane.getChildren().clear();
         overlayPane.getChildren().add(selectorLayout);
-    
-    
+
+
 }
 
 
@@ -790,7 +790,7 @@ public void showGameWindow(MapManager mapManager, Group roomGroup, Pane root) {
     leftLayout.setAlignment(Pos.CENTER);  // Centrer tout le contenu de la partie gauche
     leftLayout.setPadding(new Insets(10));
 
-    // Label des crédits (aligné à droite)
+    // Label des crédits (aligné à gauche)
     Label creditsLabel = new Label();
     creditsLabel.setText(formatCredits(credits));
     creditsLabel.setStyle("-fx-font-size: 50px; -fx-font-weight: bold;");
@@ -805,27 +805,18 @@ public void showGameWindow(MapManager mapManager, Group roomGroup, Pane root) {
     // Définir les contraintes pour les colonnes
     ColumnConstraints col1 = new ColumnConstraints();
     col1.setPrefWidth(150); // Largeur préférée des colonnes gauche
-    col1.setHalignment(HPos.CENTER); // Centrage des éléments dans cette colonne
+    col1.setHalignment(HPos.LEFT); // Aligner les éléments à gauche
 
     ColumnConstraints separator = new ColumnConstraints();
     separator.setPrefWidth(10); // Largeur de séparation visuelle entre les colonnes
 
-    ColumnConstraints col2 = new ColumnConstraints();
-    col2.setPrefWidth(150); // Largeur préférée des colonnes droite
-    col2.setHalignment(HPos.CENTER);
-
-    buttonGrid.getColumnConstraints().addAll(col1, separator, col2);
-    Button option1 = new Button("€ +5");
-    Button option2 = new Button("Option 2");
-    Button option3 = new Button("€ +50");
-    Button option4 = new Button("Option 4");
-    Button option5 = new Button("€ +500");
-    Button option6 = new Button("Option 6");
+    buttonGrid.getColumnConstraints().addAll(col1, separator);
+    Button option1 = new Button("+5/click");
+    Button option3 = new Button("+50/click");
+    Button option5 = new Button("+500/click");
     option1.setDisable(buttonStates.getOrDefault("option1", false));
     option3.setDisable(buttonStates.getOrDefault("option3", false));
     option5.setDisable(buttonStates.getOrDefault("option5", false));
-
-    
 
     // Création manuelle des boutons
     option1.setStyle("-fx-font-size: 14px; -fx-background-color: #5cb85c; -fx-text-fill: white;");
@@ -833,31 +824,15 @@ public void showGameWindow(MapManager mapManager, Group roomGroup, Pane root) {
     option1.setOnAction(e -> activateCashBonus5(creditsLabel, option1));
     buttonGrid.add(option1, 0, 0); // Colonne 0, Ligne 0
 
-    option2.setStyle("-fx-font-size: 14px; -fx-background-color: #5cb85c; -fx-text-fill: white;");
-    option2.setMaxWidth(Double.MAX_VALUE);
-    buttonGrid.add(option2, 2, 0); // Colonne 2, Ligne 0
-
-
     option3.setStyle("-fx-font-size: 14px; -fx-background-color: #5cb85c; -fx-text-fill: white;");
     option3.setMaxWidth(Double.MAX_VALUE);
     option3.setOnAction(e -> activateCashBonus50(creditsLabel, option3));
     buttonGrid.add(option3, 0, 1); // Colonne 0, Ligne 1
 
-
-    option4.setStyle("-fx-font-size: 14px; -fx-background-color: #5cb85c; -fx-text-fill: white;");
-    option4.setMaxWidth(Double.MAX_VALUE);
-    buttonGrid.add(option4, 2, 1); // Colonne 2, Ligne 1
-
-
     option5.setStyle("-fx-font-size: 14px; -fx-background-color: #5cb85c; -fx-text-fill: white;");
     option5.setMaxWidth(Double.MAX_VALUE);
     option5.setOnAction(e -> activateCashBonus500(creditsLabel, option5));
     buttonGrid.add(option5, 0, 2); // Colonne 0, Ligne 2
-
-
-    option6.setStyle("-fx-font-size: 14px; -fx-background-color: #5cb85c; -fx-text-fill: white;");
-    option6.setMaxWidth(Double.MAX_VALUE);
-    buttonGrid.add(option6, 2, 2); // Colonne 2, Ligne 2
 
     option1.setEffect(new DropShadow(10, Color.BLACK));
     option1.setOnMouseEntered(e -> {addHoverEffect(option1, 100);});
@@ -871,8 +846,6 @@ public void showGameWindow(MapManager mapManager, Group roomGroup, Pane root) {
     option5.setOnMouseEntered(e -> {addHoverEffect(option5, 10000);});
     option5.setOnMouseExited(e -> {option5.setEffect(new DropShadow(10, Color.BLACK)); option5.setCursor(Cursor.DEFAULT);});
 
-
-    // Ajouter le bouton "Fermer"
     Button closeButton = new Button("Fermer");
     closeButton.setStyle("-fx-font-size: 14px; -fx-background-color: #d9534f; -fx-text-fill: white;");
     closeButton.setOnAction(e -> overlayPane.setVisible(false));
@@ -898,14 +871,14 @@ public void showGameWindow(MapManager mapManager, Group roomGroup, Pane root) {
     cashButton.setOnMouseExited(e -> {cashButton.setCursor(Cursor.DEFAULT);});
     Image cashImage = new Image("/images/cash.png");  // Assurez-vous de fournir l'image
     ImageView cashImageView = new ImageView(cashImage);
-    
+
     // Redimensionner l'image (très grande)
     cashImageView.setFitWidth(250);  // Largeur de l'image
     cashImageView.setFitHeight(250); // Hauteur de l'image
-    
+
     // Associer l'image au bouton
     cashButton.setGraphic(cashImageView);
-    
+
     // Ajouter un effet de translation lorsque le bouton est cliqué
     cashButton.setOnAction(e -> {
         // Animation de montée et descente
@@ -932,6 +905,7 @@ public void showGameWindow(MapManager mapManager, Group roomGroup, Pane root) {
     overlayPane.getChildren().clear();
     overlayPane.getChildren().add(popupLayout);
 }
+
 
 
 
@@ -1061,10 +1035,10 @@ private void activateCashBonus500(Label creditsLabel, Button option5) {
 private void flashButtonRed(Button button) {
     // Sauvegarder le style actuel du bouton
     String originalStyle = button.getStyle();
-    
+
     // Changer la couleur du bouton en rouge
     button.setStyle("-fx-font-size: 14px; -fx-background-color: #d9534f; -fx-text-fill: white;");
-    
+
     // Créer une Timeline pour revenir au style original après 500 ms
     Timeline timeline = new Timeline(
         new KeyFrame(Duration.millis(100), e -> button.setStyle(originalStyle))
@@ -1102,28 +1076,19 @@ private void addHoverEffect(Button button, long cost) {
     });
 }
 
-
-
-
-
-
-
 private void playClickSound() {
     // Chemin du fichier audio (vous pouvez aussi utiliser "file:/path/to/your/audio.mp3")
     URL url = getClass().getResource("/sounds/Habbo Sound Catalogue.mp3");
 
     // Préchargement du son pour réduire la latence
     AudioClip clickSound = new AudioClip(url.toExternalForm());
-    
+
     try {
         // Jouer le son
         clickSound.play();
     } catch (Exception e) {
         e.printStackTrace();  // Affiche une erreur si le fichier n'est pas trouvé
     }
-    
+
 }
 }
-    
-
-
