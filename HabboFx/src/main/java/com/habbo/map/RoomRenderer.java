@@ -10,6 +10,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.control.Label;
 
+
 public class RoomRenderer {
 
     private static final int TILE_SIZE = RoomConfiguration.TILE_SIZE;
@@ -65,8 +66,7 @@ public class RoomRenderer {
 
                 Text tileLabel = new Text(textX, textY, tileId);
                 tileLabel.setFill(Color.GREY);
-                tileLabel.setFont(Font.font(8));
-                tileLabel.setStyle("-fx-font-weight: bold;");
+                tileLabel.setFont(Font.font(6));
                 tileLabel.setTranslateX(-tileLabel.getBoundsInLocal().getWidth() / 2);
                 tileLabel.setTranslateY(tileLabel.getBoundsInLocal().getHeight() / 4);
                 tileLabel.setMouseTransparent(true);

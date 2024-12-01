@@ -1,11 +1,14 @@
 package com.habbo.app;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
@@ -13,59 +16,64 @@ import javafx.scene.image.ImageView;
 import com.habbo.map.MapManager;
 import com.habbo.entities.RoomConfiguration;
 import com.habbo.ui.GameView;
-import com.habbo.map.RoomRenderer;
 import javafx.scene.transform.Scale;
+import javafx.scene.control.Slider;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.control.Button;
 import javafx.scene.media.AudioClip;
 import java.net.URL;
 
+/**
+ * La classe {@code GameLauncher} initialise et lance le jeu.
+ * Elle configure la scène, charge les paramètres, et permet de personnaliser
+ * des options comme la luminosité ou la taille de la fenêtre.
+ */
 public class GameLauncher extends Application {
 
     private MapManager mapManager;
-    private double currentRoomStartX = 470.0; // Coordonnées initiales par défaut
+    private double currentRoomStartX = 470.0;
     private double currentRoomStartY = 250.0;
+    private Settings settings;
 
     URL urla = getClass().getResource("/sounds/Cozy Lofi Beat Memories.mp3");
     AudioClip backgroundMusic = new AudioClip(urla.toExternalForm());
 
-    
-
+    /**
+     * Point d'entrée de l'application JavaFX.
+     *
+     * @param stage la fenêtre principale
+     */
     public void start(Stage stage) {
+        settings = new Settings();
         mapManager = new MapManager();
 
-        backgroundMusic.setCycleCount(AudioClip.INDEFINITE);  // Faire en sorte que la musique se répète indéfiniment
-        backgroundMusic.play();  // Démarrer la musique
-        // Exemple de salle initiale (ici, on prend la salle "Réfectoire")
+        backgroundMusic.setCycleCount(AudioClip.INDEFINITE);
+        backgroundMusic.play();
         RoomConfiguration initialRoom = mapManager.getCurrentRoom();
         if (initialRoom == null) {
             System.err.println("Aucune salle n'a été trouvée dans rooms.json !");
             return;
         }
 
-        Group roomGroup = new Group(); // Initialisation de roomGroup
+        Group roomGroup = new Group();
 
-    
         GameView gameView = new GameView();
         gameView.setRoomGroup(roomGroup);
-        gameView.setMapManager(mapManager); // Passer mapManager à GameView
+        gameView.setMapManager(mapManager);
         gameView.initializeRoom(roomGroup, currentRoomStartX, currentRoomStartY, initialRoom);
 
-        // Création de la scène
         Pane root = new Pane();
-        root.setPrefSize(1000, 800); // Taille de la fenêtre
+        root.setPrefSize(settings.getWindowWidth(), settings.getWindowHeight());
         root.setStyle("-fx-background-color: black;");
 
-        // Ajouter l'image de fond
         Image backgroundImage = new Image(getClass().getResource("/images/bg.jpg").toExternalForm());
         ImageView backgroundView = new ImageView(backgroundImage);
-        backgroundView.setFitWidth(1000);  // Adapter la largeur de l'image à celle de la scène
-        backgroundView.setFitHeight(800);  // Adapter la hauteur de l'image à celle de la scène
-        root.getChildren().add(backgroundView);  // Ajouter l'image en premier
+        backgroundView.setFitWidth(settings.getWindowWidth());
+        backgroundView.setFitHeight(settings.getWindowHeight());
+        root.getChildren().add(backgroundView);
 
-        root.getChildren().add(roomGroup);  // Ajouter le groupe de la salle au-dessus du fond
+        root.getChildren().add(roomGroup);
 
-
-        // Ajouter les autres éléments comme les barres de menu
         root.getChildren().add(gameView.createBottomLeftPanel(root));
         root.getChildren().add(gameView.createBottomRightPanel(root));
         root.getChildren().add(gameView.getMessageLabel());
@@ -73,97 +81,194 @@ public class GameLauncher extends Application {
         gameView.getMessageLabel().setLayoutY(650);
         gameView.addOverlayPane(root);
 
-        // Création de la scène
-        Scene scene = new Scene(root, 1000, 800, Color.BLACK); // Taille de la scène
+        addSettingsUI(root, backgroundView, stage);
+
+        Scene scene = new Scene(root, settings.getWindowWidth(), settings.getWindowHeight(), Color.BLACK);
         stage.setTitle("Habbo Hotel Like Room");
         stage.setScene(scene);
 
-        // Désactiver la possibilité de redimensionner la fenêtre
         stage.setResizable(false);
 
-        // Activer le déplacement de la room via la souris
         enableRoomDragging(roomGroup, root);
 
-        // Ajouter l'événement de zoom centré sur la souris
         enableZoom(scene, root, roomGroup);
 
         stage.show();
     }
 
-    
-    
+    private void addSettingsUI(Pane root, ImageView backgroundView, Stage stage) {
+        // Curseur de luminosité
+        Slider brightnessSlider = new Slider(0.0, 1.0, settings.getBrightness());
+        brightnessSlider.setPrefWidth(300);
+        brightnessSlider.setStyle(
+            "-fx-control-inner-background: #eeeeee; " +
+            "-fx-track-color: #ffca28; " + // Couleur dorée pour la piste
+            "-fx-thumb-color: #f57c00; " + // Couleur orange vif pour le bouton
+            "-fx-background-radius: 10; " +
+            "-fx-pref-height: 10px;"
+        );
+        brightnessSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+            settings.setBrightness(newValue.doubleValue());
+            backgroundView.setOpacity(settings.getBrightness());
+        });
+
+        // Bouton pour agrandir la fenêtre
+        Button increaseSizeButton = new Button("Agrandir");
+        styleButtonWithClickEffect(increaseSizeButton);
+        increaseSizeButton.setOnAction(event -> {
+            settings.setWindowWidth(settings.getWindowWidth() + 100);
+            settings.setWindowHeight(settings.getWindowHeight() + 100);
+            updateWindowSize(stage, root.getScene(), root, backgroundView);
+        });
+
+        // Bouton pour réduire la fenêtre
+        Button decreaseSizeButton = new Button("Réduire");
+        styleButtonWithClickEffect(decreaseSizeButton);
+        decreaseSizeButton.setOnAction(event -> {
+            settings.setWindowWidth(settings.getWindowWidth() - 100);
+            settings.setWindowHeight(settings.getWindowHeight() - 100);
+            updateWindowSize(stage, root.getScene(), root, backgroundView);
+        });
+
+        // Conteneur horizontal pour les boutons "Agrandir" et "Réduire"
+        HBox buttonBox = new HBox(20); // Espacement horizontal entre les boutons
+        buttonBox.getChildren().addAll(decreaseSizeButton, increaseSizeButton);
+        buttonBox.setAlignment(Pos.CENTER); // Centrer les boutons horizontalement
+
+        // Conteneur vertical pour tout centrer en haut
+        VBox settingsBox = new VBox(20); // Espacement vertical entre le curseur et les boutons
+        settingsBox.getChildren().addAll(brightnessSlider, buttonBox);
+        settingsBox.setAlignment(Pos.CENTER); // Centrer verticalement tout le contenu du VBox
+        settingsBox.setLayoutX((settings.getWindowWidth() - 300) / 2); // Centrage horizontal initial
+        settingsBox.setLayoutY(20); // Positionner en haut de la fenêtre
+
+        // Écouteur pour redimensionner dynamiquement
+        root.widthProperty().addListener((obs, oldVal, newVal) -> {
+            settingsBox.setLayoutX((newVal.doubleValue() - 300) / 2);
+        });
+
+        // Ajouter le conteneur principal au root
+        root.getChildren().add(settingsBox);
+    }
 
 
 
+    // Méthode utilitaire pour styliser les boutons avec effet de clic
+    private void styleButtonWithClickEffect(Button button) {
+        // Style par défaut
+        button.setStyle(
+            "-fx-font-size: 14px; " +
+            "-fx-background-color: #4caf50; " + // Vert clair
+            "-fx-text-fill: white; " +
+            "-fx-border-radius: 10; " +
+            "-fx-background-radius: 10; " +
+            "-fx-padding: 8 16;"
+        );
+
+        // Effet d'ombre et de survol
+        button.setEffect(new DropShadow(5, Color.BLACK));
+        button.setOnMouseEntered(e -> {
+            button.setStyle(
+                "-fx-font-size: 14px; " +
+                "-fx-background-color: #66bb6a; " + // Vert légèrement plus clair
+                "-fx-text-fill: white; " +
+                "-fx-border-radius: 10; " +
+                "-fx-background-radius: 10; " +
+                "-fx-padding: 8 16;"
+            );
+            button.setCursor(Cursor.HAND);
+            button.setEffect(new DropShadow(10, Color.GRAY));
+        });
+        button.setOnMouseExited(e -> {
+            button.setStyle(
+                "-fx-font-size: 14px; " +
+                "-fx-background-color: #4caf50; " +
+                "-fx-text-fill: white; " +
+                "-fx-border-radius: 10; " +
+                "-fx-background-radius: 10; " +
+                "-fx-padding: 8 16;"
+            );
+            button.setEffect(new DropShadow(5, Color.BLACK));
+            button.setCursor(Cursor.DEFAULT);
+        });
+
+        // Effet de clic
+        button.setOnMousePressed(e -> button.setOpacity(0.7)); // Réduction temporaire de l'opacité
+        button.setOnMouseReleased(e -> button.setOpacity(1.0)); // Retour à la normale
+    }
+
+
+
+
+
+    private void updateWindowSize(Stage stage, Scene scene, Pane root, ImageView backgroundView) {
+        stage.setWidth(settings.getWindowWidth());
+        stage.setHeight(settings.getWindowHeight());
+
+        backgroundView.setFitWidth(settings.getWindowWidth());
+        backgroundView.setFitHeight(settings.getWindowHeight());
+        root.setPrefSize(settings.getWindowWidth(), settings.getWindowHeight());
+    }
 
 
     private void enableRoomDragging(Group roomGroup, Pane root) {
-        // Utiliser un tableau mutable pour stocker les coordonnées initiales
-        final double[] initialPosition = new double[2]; // [0] = initialX, [1] = initialY
+        final double[] initialPosition = new double[2];
 
-        // Lors du pressage de la souris, on capture la position initiale de la room et de la souris
         roomGroup.setOnMousePressed(event -> {
-            initialPosition[0] = event.getSceneX() - roomGroup.getLayoutX(); // Distance entre la souris et la room
-            initialPosition[1] = event.getSceneY() - roomGroup.getLayoutY(); // Distance entre la souris et la room
+            initialPosition[0] = event.getSceneX() - roomGroup.getLayoutX();
+            initialPosition[1] = event.getSceneY() - roomGroup.getLayoutY();
         });
 
-        // Lors du mouvement de la souris, on déplace la room en fonction de la nouvelle position de la souris
         roomGroup.setOnMouseDragged(event -> {
-            double deltaX = event.getSceneX() - initialPosition[0]; // Calculer la nouvelle position X
-            double deltaY = event.getSceneY() - initialPosition[1]; // Calculer la nouvelle position Y
-
-            // Appliquer le nouveau décalage
+            double deltaX = event.getSceneX() - initialPosition[0];
+            double deltaY = event.getSceneY() - initialPosition[1];
             roomGroup.setLayoutX(deltaX);
             roomGroup.setLayoutY(deltaY);
         });
     }
 
     private void enableZoom(Scene scene, Pane root, Group roomGroup) {
-        // Créer un objet Scale pour effectuer le zoom, appliqué uniquement sur roomGroup
-        Scale scale = new Scale();
-        roomGroup.getTransforms().add(scale); // Appliquer l'échelle sur roomGroup
-    
-        // Écouter l'événement de la molette pour zoomer
+        Scale scale = new Scale(1, 1, 0, 0); // Échelle initiale à 1
+        roomGroup.getTransforms().add(scale);
+
         scene.addEventFilter(ScrollEvent.SCROLL, event -> {
             double delta = event.getDeltaY();
-            double scaleFactor = 1.015; // Facteur de zoom
-            double oldScaleX = scale.getX();
-            double oldScaleY = scale.getY();
-    
-            // Récupérer la position de la souris par rapport à la scène
+            double scaleFactor = 1.015;
+
             double mouseX = event.getSceneX();
             double mouseY = event.getSceneY();
-    
-            // Calculer le facteur de mise à l'échelle
+
             if (delta > 0) {
                 // Zoom avant
-                scale.setX(scale.getX() * scaleFactor);
-                scale.setY(scale.getY() * scaleFactor);
-            } else if (delta < 0) {
-                // Zoom arrière
-                scale.setX(scale.getX() / scaleFactor);
-                scale.setY(scale.getY() / scaleFactor);
+                scaleFactor = 1.015;
+            } else if (delta < 0 && scale.getX() > 1) {
+                // Zoom arrière uniquement si l'échelle est supérieure à 1
+                scaleFactor = 1 / 1.015;
+            } else {
+                // Si l'échelle est à 1 ou moins, bloquer le dézoom
+                return;
             }
-    
-            // Limiter l'échelle à 1 pour éviter le dézoom excessif
-            if (scale.getX() < 1) {
-                scale.setX(1);
-                scale.setY(1);
+
+            // Appliquer le facteur de zoom
+            double newScaleX = scale.getX() * scaleFactor;
+            double newScaleY = scale.getY() * scaleFactor;
+
+            if (newScaleX < 1) {
+                newScaleX = 1;
+                newScaleY = 1;
             }
-    
-            // Calculer l'écart de déplacement de la scène en fonction du changement d'échelle
-            double offsetX = mouseX - roomGroup.getLayoutX();
-            double offsetY = mouseY - roomGroup.getLayoutY();
-    
-            // Calculer la nouvelle position pour que la souris reste au même endroit
-            double deltaX = (offsetX * (scale.getX() - oldScaleX)) / oldScaleX;
-            double deltaY = (offsetY * (scale.getY() - oldScaleY)) / oldScaleY;
-    
-            // Appliquer les translations pour décaler roomGroup, mais garder root fixe
-            roomGroup.setLayoutX(roomGroup.getLayoutX() - deltaX);
-            roomGroup.setLayoutY(roomGroup.getLayoutY() - deltaY);
-    
-            event.consume(); // Consommer l'événement pour éviter le défilement
+
+            // Calcul des ajustements pour centrer le zoom sur le curseur
+            double f = (scaleFactor - 1);
+
+            roomGroup.setLayoutX(roomGroup.getLayoutX() - f * (mouseX - roomGroup.getLayoutX()));
+            roomGroup.setLayoutY(roomGroup.getLayoutY() - f * (mouseY - roomGroup.getLayoutY()));
+
+            // Appliquer la nouvelle échelle
+            scale.setX(newScaleX);
+            scale.setY(newScaleY);
+
+            event.consume();
         });
     }
 

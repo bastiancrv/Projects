@@ -3,7 +3,7 @@ package com.habbo.entities;
 import java.util.List;
 
 public class RoomConfiguration {
-    public static final int TILE_SIZE = 20;
+    public static final int TILE_SIZE = 40;
 
     private String id;
     private String name;
