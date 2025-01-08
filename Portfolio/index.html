@@ -1,24 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/welcome.css">
-    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
-    <title>Welcome</title>
-</head>
-<body>
-    <div class="container">
-        <div class="title">
-            <h1>Welcome.</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/x-icon" href="moi2.png">
+    <title>Bastian's Portfolio</title>
+  </head>
+  <body>
+    <section id="Accueil">
+    <nav>
+      <div class="nav-logo">
+        <h1>BC</h1>
+      </div>
+      <div class="nav-links">
+        <li id="link0"><a href="#">Accueil</a></li>
+        <li id="link1"><a href="#">Expériences</a></li>
+        <li id="link2"><a href="#">Formations</a></li>
+        <li id="link3"><a href="#">Projets</a></li>
+      </div>
+      <div class="nav-contact">
+        <button class="btn" id="link4">Me Contacter</button>
+      </div>
+    </nav>
+
+    <header class="container">
+        <div class="content">
+          <span class="blur"></span>
+          <span class="blur"></span>
+          <h4>Portfolio</h4>
+          <h1><span>Bastian CRUVELLIER</span></h1>
+          <p>
+            En recherche d'une <strong>alternance</strong><br />
+            Pour une durée de <strong>33 mois</strong><br />
+            Disponibilité <strong>immédiate</strong><br />
+            Dans le <strong>développement web</strong><br />
+            Et/ou en <strong>cybersécurité</strong>
+          </p>
+          <div class="btns">
+            <button
+              onclick="window.location.href='mailto:bastian.cruvellier@epitech.eu'"
+            >
+              <img src="mail.png" alt="Email" />
+            </button>
+            <button
+              onclick="window.open('https://www.linkedin.com/in/bastian-cruvellier-152712303/', '_blank')"
+            >
+              <img src="linkedin.png" alt="LinkedIn" />
+            </button>
+            <button
+              onclick="window.open('https://github.com/bastiancrv/Projects', '_blank')"
+            >
+              <img src="git.png" alt="GitHub" />
+            </button>
+          </div><br>
+          <a id="cv" href="cv.pdf" class="btn" download>Télécharger mon CV</a>
         </div>
-        <div class="intro">
-            <h2>Student Developper</h2>
-            <h4>Let's introduce myself</h4>
+        <div class="image">
+          <img src="moi2.png" alt="" />
         </div>
-        <div class="enter">
-            <button><a href="content.html">Enter</a></button>
+      </header>
+</section>
+
+
+    <section>
+        <div class="marquee-container">
+            <div class="marquee">
+              <!-- Technologies -->
+              <div class="tech-item">
+                <img src="images/html.svg" alt="HTML" class="tech-icon" />
+                <span class="tech-name">HTML</span>
+              </div>
+              <div class="tech-item">
+                <img src="images/css.svg" alt="CSS" class="tech-icon" />
+                <span class="tech-name">CSS</span>
+              </div>
+              <div class="tech-item">
+                <img src="images/php.svg" alt="PHP" class="tech-icon" />
+                <span class="tech-name">PHP</span>
+              </div>
+              <div class="tech-item">
+                <img src="images/js.svg" alt="JavaScript" class="tech-icon" />
+                <span class="tech-name">JavaScript</span>
+              </div>
+              <div class="tech-item">
+                <img src="images/mysql.svg" alt="MySQL" class="tech-icon" />
+                <span class="tech-name">MySQL</span>
+              </div>
+              <div class="tech-item">
+                <img src="images/c++.svg" alt="C++" class="tech-icon" />
+                <span class="tech-name">C++</span>
+              </div>
+              <div class="tech-item">
+                <img src="images/java.svg" alt="Java" class="tech-icon" />
+                <span class="tech-name">Java</span>
+              </div>
+              <div class="tech-item">
+                <img src="images/python.svg" alt="Python" class="tech-icon" />
+                <span class="tech-name">Python</span>
+              </div>
+
+
+              <!-- Systèmes d'exploitation -->
+              <div class="tech-item">
+                  <img src="images/windows.svg" alt="Python" class="tech-icon" />
+                  <span class="tech-name">Windows</span>
+                </div>
+                <div class="tech-item">
+                  <img src="images/linux.png" alt="Python" class="tech-icon" />
+                  <span class="tech-name">Linux</span>
+                </div>
+                <div class="tech-item">
+                  <img src="images/mac.svg" alt="Python" class="tech-icon" />
+                  <span class="tech-name">MacOS</span>
+                </div>
+          </div>
+    </section>
+
+    <section id="Expériences" class="container">
+      <h2 class="header">Expériences</h2>
+      <div class="experiences">
+        <div class="card">
+          <h4>Aix-en-Provence</h4>
+          <h5>Mai 2023 - Juin 2023</h5>
+          <h3>Ortec Group</h3>
+          <br />
+          <h5>Stage de fin d'année de BTS</h5>
+          <h4>Administrateur Systèmes et Réseaux</h4>
+          <br />
+          <p>
+            Déploiement d'ordinateurs portables | Configuration BIOS UEFI, Boot
+            W indows 10/11, Enrôlement Ortec, Installation Logiciel
+          </p>
+          <br />
+          <p>
+            Administration Système avec Active Directory | Attribution de
+            licences et permissions
+          </p>
+          <br />
+          <p>Assistance et dépannage de pannes | Support niveau 1</p>
         </div>
-    </div>
-</body>
+        <div class="card">
+          <h4>Pourrières</h4>
+          <h5>Juin 2023 - Juillet 2023</h5>
+          <h3>C2RD</h3>
+          <br />
+          <h4>Emploi d'été</h4>
+          <br />
+          <p>
+            Dépoussiérage, mise en rayon, mise en ligne d'articles sur le site,
+            organisation d'inventaire, réagencement de la disposition du hangar
+          </p>
+        </div>
+        <div class="card">
+          <h4>Pourrières</h4>
+          <h5>Juillet 2023 - Aout 2023</h5>
+          <h3>Service Technique</h3>
+          <br />
+          <h4>Emploi d'été</h4>
+          <br />
+          <p>Pose de brise vue dans les écoles primaires et matenelles</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="Formations" class="container">
+      <div class="scroll2"></div>
+      <h2 class="header">Formations</h2>
+      <p class="sub-header">
+        Passioné depuis toujours par les nouvelles technologies et l'<strong>informatique</strong> en général, j'ai décidé d'orienter mes études tout du long dans ce domaine. <br>
+        Durant mes études je suis tombé amoureux du <strong>Développement Web</strong>, et, ayant depuis toujours un fort attrait envers l'armée et la défense de manière générale, j'ai pour ambition de me spécialisé en <strong>Cybersécurité</strong>
+      </p>
+      <div class="fcards">
+        <div class="card">
+          <div class="content">
+            <h4>Marseille</h4>
+            <h5>2024 - aujourd'hui</h5>
+            <h3>Epitech</h3>
+            <p>Master Architecte Systèmes d'information</p>
+            <h5>Description du diplôme:</h5>
+            <p>Algorithmie, Web, Java, Réseau, Docker, Dev Mobile, MERN, PHP Symfony,
+                Devops
+            </p>
+            <p class="techno">
+              Spécialités au choix : IA, CyberSécurité, Cloud, Data, IOT, VR
+            </p>
+            <h5>Choix perso : CyberSécurité</h5>
+          </div>
+        </div>
+        <div class="card">
+          <div class="content">
+            <h4>Aix-en-Provence</h4>
+            <h5>2022 - 2024</h5>
+            <h3>Lycée Saint Éloi</h3>
+            <p>BTS Système Numériques option Informatique et Réseaux</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="content">
+            <h4>Saint Maximin La St-Beaume</h4>
+            <h5>2019 - 2022</h5>
+            <h3>Lycée Janetti</h3>
+            <p>
+              Baccalauréat Général <br /><br />
+
+              Spécialités : <strong>NSI*</strong> et <strong>SI*</strong> <br />
+              <br />
+            </p><br><br>
+            <p class="techno">
+              *Numérique et Sciences Informatiques <br />
+              *Sciences de l'Ingénieur
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="Projets" class="container">
+      <div class="scroll3"></div>
+      <h2 class="header">Projets</h2>
+      <div class="projets">
+        <div class="card">
+          <h4>Habbo Fx</h4>
+          <br />
+          <p>
+            Jeu vidéo sur le thème du célèbre jeu Habbo Hotel <br />
+            Coin cliqueur avec des bonus <br />
+            Boutique et inventaire <br />
+            Différentes pièces personalisables <br />
+          </p>
+          <br />
+          <p class="techno">
+            Technologies : <strong>Java, Javafx, Maven</strong>
+          </p>
+          <div class="btns">
+            <button id="git"
+            onclick="window.open('https://github.com/bastiancrv/Projects', '_blank')"
+          >
+            <img src="git.png" alt="GitHub" />
+          </button>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Jeu du pendu</h4>
+          <br />
+          <p>Mini-jeu du pendu avec un thème minecraft</p>
+          <br />
+          <p class="techno">Technologies : <strong>Python, Pygames</strong></p>
+          <div class="btns">
+            <button id="git"
+            onclick="window.open('https://github.com/bastiancrv/Projects', '_blank')"
+          >
+            <img src="git.png" alt="GitHub" />
+          </button>
+          </div>
+        </div>
+        <div class="card">
+          <h4>JobBoard</h4>
+          <br />
+          <p>
+            Site web d'annonces d'emploi <strong>dynamique</strong> permettant
+            de faciliter la recherche d'emploi
+          </p>
+          <br />
+          <p class="techno">
+            Technologies : <strong>HTML, CSS, Javascript, PHP, Mysql</strong>
+          </p>
+          <div class="btns">
+            <button id="git"
+            onclick="window.open('https://github.com/bastiancrv/Projects', '_blank')"
+          >
+            <img src="git.png" alt="GitHub" />
+          </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="scroll4"></div>
+      <div class="container">
+        <h2>Contactez-moi</h2>
+        <p>
+          N'hésitez pas à m'envoyer un message si vous avez des questions ou
+          autre.
+        </p>
+        <form
+          action="https://formspree.io/f/mvgonezb"
+          method="POST"
+          class="contact-form"
+        >
+          <div class="form-group">
+            <label for="name">Nom</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Votre nom"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Votre email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="6"
+              placeholder="Votre message"
+              required
+            ></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Envoyer</button>
+        </form>
+      </div>
+      <div class="contact-links">
+        <div class="btns">
+            <button id="mail"
+              onclick="window.location.href='mailto:bastian.cruvellier@epitech.eu'"
+            >
+              <img src="mail.png" alt="Email" />
+            </button>
+            <button id="linkedin"
+              onclick="window.open('https://www.linkedin.com/in/bastian-cruvellier-152712303/', '_blank')"
+            >
+              <img src="linkedin.png" alt="LinkedIn" />
+            </button>
+            <button id="git"
+              onclick="window.open('https://github.com/bastiancrv/Projects', '_blank')"
+            >
+              <img src="git.png" alt="GitHub" />
+            </button>
+          </div>
+      </div>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
 </html>
