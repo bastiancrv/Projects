@@ -8,7 +8,7 @@ import GmailSvg from "./_icons/GmailSvg";
 
 function NavBar() {
   return (
-    <div className="flex justify-between text-neutral-300 items-center w-full">
+    <div className="flex justify-between text-neutral-300 items-center min-w-full">
       <h4 className="font-bold text-lg select-none hover:scale-105 transition-all duration-300 flex gap-2 max-sm:hidden">
         Portfolio{" "}
         <ReactSvg

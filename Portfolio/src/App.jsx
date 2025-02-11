@@ -33,9 +33,9 @@ function App() {
           <nav>
             <NavBar />
           </nav>
-          <header className="w-fit">
+          <div className="w-fit mx-auto">
             <About />
-          </header>
+          </div>
           <div className="flex flex-row gap-4 justify-center max-md:flex-col">
             <div>
               <Card title={"Projets"}>
@@ -62,7 +62,7 @@ function App() {
                   ]}
                 >
                   Le portfolio sur lequel vous vous trouvez à été réalisé au
-                  cours d&apos;un projet à Epitech, je le maintient
+                  cours d&apos;un projet à Epitech, je le maintiens
                   régulièrement à jour afin d&apos;y ajouter mes nouveaux
                   projets.
                 </SectionCard>
@@ -85,7 +85,7 @@ function App() {
                   <br /> <br />
                   <ul className="list-disc list-inside text-left">
                     <h1 className="text-center font-extralight italic underline">
-                      Fonctionalités présentes :
+                      Fonctionnalités présentes :
                     </h1>
                     <li>Placement d&apos;objets dans une salle ✅</li>
                     <li>Navigation entre les salles ✅</li>
@@ -99,16 +99,16 @@ function App() {
                     <li>Boutique d&apos;objets ✅</li>
                     <li>Inventaire ✅</li>
                     <li>Musique d&apos;ambiance ✅</li>
-                  </ul> <br />
-
+                  </ul>{" "}
+                  <br />
                   <ul className="list-disc list-inside text-left">
                     <h1 className="text-center font-extralight italic underline">
-                      Fonctionalités à venir :
+                      Fonctionnalités à venir :
                     </h1>
                     <li>Pathfining du personnage ❌</li>
                     <li>PNJ avec système de quêtes ❌</li>
                     <li>Sauvegarde des objets dans les pièces ❌</li>
-                    <li>Colision avec les objets ❌</li>
+                    <li>Collision avec les objets ❌</li>
                     <li>Système de portes pour changer de salle ❌</li>
                   </ul>
                 </SectionCard>
@@ -134,7 +134,7 @@ function App() {
                   <br /> <br />
                   <ul className="list-disc list-inside text-left">
                     <h1 className="text-center font-extralight italic underline">
-                      Fonctionalités présentes :
+                      Fonctionnalités présentes :
                     </h1>
                     <li>
                       Connexion{" "}
@@ -162,7 +162,7 @@ function App() {
                   <br />
                   <ul className="list-disc list-inside text-left">
                     <h1 className="text-center font-extralight italic underline">
-                      Fonctionalités à venir :
+                      Fonctionnalités à venir :
                     </h1>
                     <li>Cvthèque ❌</li>
                     <li>Partager des fichiers pour candidater ❌</li>
@@ -176,7 +176,7 @@ function App() {
                   image2={irc2}
                   ShowProject={true}
                   linkgithub={
-                    "https://github.com/bastiancrv/Projects/tree/main/HabboFx"
+                    "https://github.com/bastiancrv/Projects/tree/main/Portfolio"
                   }
                   technologies={[
                     {
@@ -199,7 +199,7 @@ function App() {
                   <br /> <br />
                   <ul className="list-disc list-inside text-left">
                     <h1 className="text-center font-extralight italic underline">
-                      Fonctionalités présentes :
+                      Fonctionnalités présentes :
                     </h1>
                     <li>
                       Connexion{" "}
@@ -215,7 +215,7 @@ function App() {
                   <br />
                   <ul className="list-disc list-inside text-left">
                     <h1 className="text-center font-extralight italic underline">
-                      Fonctionalités à venir :
+                      Fonctionnalités à venir :
                     </h1>
                     <li>Création de channels publiques ❌</li>
                     <li>Envoi de fichiers ❌</li>
@@ -231,19 +231,6 @@ function App() {
             </div>
             <div className="flex flex-col gap-4">
               <Card title={"Formations"}>
-                <SectionCard
-                  title={"BTS SN IR"}
-                  subtitle={"2022-2024"}
-                  technologies={[
-                    { name: "Lycée Saint Éloi", icon: <LyceePng /> },
-                  ]}
-                >
-                  Après avoir obtenu mon Baccalauréat Général en spécialité NSI
-                  et SI j&apos;ai décidé de m&apos;orienter vers un BTS Systèmes
-                  Numérique option Informatique et Réseaux, ce qui m&apos;a
-                  permis de développer mes compétences en développement et
-                  d&apos;apprendre de nouveaux languages.
-                </SectionCard>
                 <SectionCard
                   title={"Master of Science"}
                   subtitle={"2024-aujourd'hui"}
@@ -282,6 +269,19 @@ function App() {
                     </div>
                   </div>
                 </SectionCard>
+                <SectionCard
+                  title={"BTS SN IR"}
+                  subtitle={"2022-2024"}
+                  technologies={[
+                    { name: "Lycée Saint Éloi", icon: <LyceePng /> },
+                  ]}
+                >
+                  Après avoir obtenu mon Baccalauréat Général en spécialité NSI
+                  et SI j&apos;ai décidé de m&apos;orienter vers un BTS Systèmes
+                  Numérique option Informatique et Réseaux, ce qui m&apos;a
+                  permis de développer mes compétences en développement et
+                  d&apos;apprendre de nouveaux languages.
+                </SectionCard>
               </Card>
               <Card title={"Expériences Pro"}>
                 <SectionCard
@@ -289,8 +289,11 @@ function App() {
                   subtitle={"2022"}
                   technologies={[{ name: "Ortec Group", icon: <OrtecPng /> }]}
                 >
-                  Stage de fin d&apos;année de BTS en Administration Systèmes et
-                  Réseaux <br /> <br />
+                  Stage de fin d&apos;année de BTS en{" "}
+                  <span className="font-semibold">
+                    Administration Systèmes et Réseaux
+                  </span>{" "}
+                  <br /> <br />
                   Déploiement d&apos;ordinateurs portables | Configuration BIOS
                   UEFI, Boot Windows 10/11, Enrôlement Ortec, Installation
                   Logiciel <br /> <br />
