@@ -79,12 +79,14 @@ function About() {
         />
       </div>
       <div className="mt-10">
-        <a
+        <button
           className="border rounded-xl p-2 px-4 text-sm font-extralight shadow-md shadow-transparent hover:-translate-y-1 hover:shadow-neutral-500 transition-all duration-300 border-neutral-500"
-          href={Cv}
+          onClick={() => {
+            window.open(Cv);
+          }}
         >
           Voir mon CV
-        </a>
+        </button>
       </div>
     </div>
   );
