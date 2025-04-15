@@ -1,7 +1,7 @@
 fclean:
 	@echo "Cleaning up..."
 
-test_run:
+tests_run:
 	@echo "Running tests..."
 
 clean:
