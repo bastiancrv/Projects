@@ -1,16 +1,8 @@
-NAME = my_program
-SRC = main.c
+fclean:
+	@echo "Cleaning up..."
 
-all:
-	gcc -o $(NAME) $(SRC)
-
-tests_run:
+test_run:
 	@echo "Running tests..."
 
 clean:
-	rm -f *.o
-
-fclean: clean
-	rm -f $(NAME)
-
-.PHONY: all tests_run clean fclean
+	@echo "Cleaning up..."
