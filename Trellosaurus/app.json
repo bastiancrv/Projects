@@ -1,0 +1,46 @@
+{
+    "expo": {
+        "name": "Trellosaurus",
+        "slug": "Trellosaurus",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/images/bbdino.png",
+        "scheme": "myapp",
+        "userInterfaceStyle": "automatic",
+        "newArchEnabled": true,
+        "ios": {
+            "foregroundImage": "./assets/images/bbdino.png",
+            "supportsTablet": true
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/images/bbdino.png",
+                "backgroundColor": "#ffffff"
+            }
+        },
+        "web": {
+            "bundler": "metro",
+            "output": "static",
+            "foregroundImage": "./assets/images/bbdino.png",
+            "favicon": "./assets/images/bbdino.png"
+        },
+        "extra": {
+            "enableLogs": false
+        },
+        "plugins": [
+            "expo-router",
+            [
+                "expo-splash-screen",
+                {
+                    "image": "./assets/images/splash-icon.png",
+                    "imageWidth": 200,
+                    "resizeMode": "contain",
+                    "backgroundColor": "#ffffff"
+                }
+            ]
+        ],
+        "experiments": {
+            "typedRoutes": true
+        }
+    }
+}
